@@ -8,9 +8,10 @@ else()
   set (VERONA_RT_ONLY_HEADER_LIBRARY ON)
 endif()
 add_subdirectory(rt)
+add_subdirectory(rt_c)
 
 
-# Should go to stricter warnings 
+# Should go to stricter warnings
 #   warnings_high()
 # But for now, just add some to stop the Windows build breaking
 if(MSVC)
