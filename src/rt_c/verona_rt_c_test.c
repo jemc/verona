@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include "verona_c.h"
+#include "verona_rt_c.h"
 
 ///
 // C API example - implements the same semantics as the bank1.verona example.

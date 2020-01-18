@@ -2,7 +2,7 @@
 using namespace verona;
 
 extern "C" {
-  #include "verona_c.h"
+  #include "verona_rt_c.h"
 }
 
 ///
