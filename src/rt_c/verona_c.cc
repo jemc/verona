@@ -72,17 +72,15 @@ void RTCown_acquire(RTCown* cown) {
   rt::Cown::acquire(reinterpret_cast<rt::Cown*>(cown));
 }
 
-void RTCown_release(RTCown* cown, RTAlloc* alloc) {
+void RTCown_release(RTCown* cown) {
   rt::Cown::release(
-    reinterpret_cast<rt::Alloc*>(alloc),
+    rt::ThreadAlloc::get(),
     reinterpret_cast<rt::Cown*>(cown)
   );
 }
 
-void RTCown_weak_release(RTAlloc* alloc, RTCown* cown) {
-  reinterpret_cast<rt::Cown*>(cown)->weak_release(
-    reinterpret_cast<rt::Alloc*>(alloc)
-  );
+void RTCown_weak_release(RTCown* cown) {
+  reinterpret_cast<rt::Cown*>(cown)->weak_release(rt::ThreadAlloc::get());
 }
 
 void RTCown_weak_acquire(RTCown* cown) {
@@ -99,6 +97,14 @@ bool RTCown_acquire_strong_from_weak(RTCown* cown) {
 RTAction* RTAction_new(RTActionDescriptor* desc) {
   return reinterpret_cast<RTAction*>(
     new rt::Action(reinterpret_cast<rt::Action::Descriptor*>(desc))
+  );
+}
+
+void RTAction_schedule(RTAction* action, RTCown** cowns, size_t count) {
+  rt::Cown::schedule(
+    count,
+    reinterpret_cast<rt::Cown**>(cowns),
+    reinterpret_cast<rt::Action*>(action)
   );
 }
 

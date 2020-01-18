@@ -674,13 +674,6 @@ namespace verona::rt
         1, &cown, std::forward<Args>(args)...);
     }
 
-    /**
-     * Sends a multimessage to the first cown we want to acquire.
-     *
-     * Pass `transfer = YesTransfer` as a template argument if the
-     * caller is transfering ownership of a reference count on each cown to this
-     * method.
-     **/
     template<
       class Behaviour,
       TransferOwnership transfer = NoTransfer,
@@ -693,6 +686,21 @@ namespace verona::rt
       Alloc* alloc = ThreadAlloc::get();
       Behaviour* b = (Behaviour*)alloc->alloc<sizeof(Behaviour)>();
       Action* action = new (b) Behaviour(std::forward<Args>(args)...);
+
+      schedule<transfer>(count, cowns, action);
+    }
+
+    /**
+     * Sends a multimessage to the first cown we want to acquire.
+     *
+     * Pass `transfer = YesTransfer` as a template argument if the
+     * caller is transfering ownership of a reference count on each cown to this
+     * method.
+     **/
+    template<TransferOwnership transfer = NoTransfer>
+    static void schedule(size_t count, Cown** cowns, Action* action)
+    {
+      Alloc* alloc = ThreadAlloc::get();
       Cown** sort = (Cown**)alloc->alloc(count * sizeof(Cown*));
       memcpy(sort, cowns, count * sizeof(Cown*));
 

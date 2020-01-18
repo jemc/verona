@@ -73,14 +73,13 @@ void RTCown_reschedule(RTCown* cown);
 bool RTCown_can_lifo_schedule(RTCown* cown);
 void RTCown_wake(RTCown* cown);
 void RTCown_acquire(RTCown* cown);
-void RTCown_release(RTCown* cown, RTAlloc* alloc);
-void RTCown_weak_release(RTCown* cown, RTAlloc* alloc);
+void RTCown_release(RTCown* cown);
+void RTCown_weak_release(RTCown* cown);
 void RTCown_weak_acquire(RTCown* cown);
 bool RTCown_acquire_strong_from_weak(RTCown* cown);
 // TODO: RTCown_mark_for_scan?
 // TODO: RTCown_mark_notify?
 // TODO: RTCown_init?
-// TODO: RTCown_schedule?
 // TODO: RTCown_run?
 // TODO: RTCown_try_collect?
 // TODO: RTCown_is_live?
@@ -90,6 +89,7 @@ bool RTCown_acquire_strong_from_weak(RTCown* cown);
 // RTAction
 
 RTAction* RTAction_new(RTActionDescriptor* desc);
+void RTAction_schedule(RTAction* action, RTCown** cowns, size_t count);
 
 ///
 // RTScheduler
