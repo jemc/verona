@@ -108,7 +108,7 @@ bool RTScheduler_is_teardown_in_progress();
 // TODO: RTScheduler_alloc_epoch?
 // TODO: RTScheduler_should_scan?
 // TODO: RTScheduler_in_prescan?
-// TODO: RTScheduler_want_ld?
+void RTScheduler_want_ld();
 void RTScheduler_init(size_t cores);
 void RTScheduler_run();
 // TODO: RTScheduler_run_with_startup?

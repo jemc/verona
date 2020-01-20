@@ -71,6 +71,7 @@ void BankAccount_add_fn(BankAccount_add_Action* action) {
 int main(int argc, const char* argv[])
 {
   RTScheduler_init(1);
+  RTScheduler_want_ld();
   RTScheduler_set_detect_leaks(true);
   printf("RTScheduler setup complete!\n");
 

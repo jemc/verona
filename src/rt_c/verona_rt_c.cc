@@ -143,6 +143,10 @@ bool RTScheduler_is_teardown_in_progress() {
   return rt::Scheduler::is_teardown_in_progress();
 }
 
+void RTScheduler_want_ld() {
+  rt::Scheduler::want_ld();
+}
+
 void RTScheduler_init(size_t cores) {
   rt::Scheduler::get().init(cores);
 }
