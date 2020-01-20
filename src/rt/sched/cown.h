@@ -337,6 +337,7 @@ namespace verona::rt
 
     void init(Alloc* alloc, const Descriptor* desc, EpochMark epoch)
     {
+      this->weak_count = 1;
       make_cown();
       set_descriptor(desc);
       set_epoch(epoch);
