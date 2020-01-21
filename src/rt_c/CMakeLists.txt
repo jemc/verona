@@ -1,7 +1,7 @@
 set(CMAKE_C_COMPILE_OBJECT
 "<CMAKE_C_COMPILER> -fPIC <DEFINES> <FLAGS> -o <OBJECT> -c <SOURCE>")
 
-add_library(verona_rt_c SHARED verona_rt_c.cc)
+add_library(verona_rt_c verona_rt_c.cc)
 target_link_libraries(verona_rt_c verona_rt)
 install(TARGETS verona_rt_c RUNTIME DESTINATION .)
 
