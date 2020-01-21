@@ -56,10 +56,6 @@ const RTDescriptor* RTCown_get_descriptor(RTCown* cown) {
   );
 }
 
-void RTCown_reschedule(RTCown* cown) {
-  reinterpret_cast<rt::Cown*>(cown)->reschedule();
-}
-
 bool RTCown_can_lifo_schedule(RTCown* cown) {
   return reinterpret_cast<rt::Cown*>(cown)->can_lifo_schedule();
 }
@@ -117,18 +113,6 @@ void RTScheduler_set_detect_leaks(bool b) {
 
 bool RTScheduler_get_detect_leaks() {
   return rt::Scheduler::get_detect_leaks();
-}
-
-void RTScheduler_record_inflight_message() {
-  rt::Scheduler::record_inflight_message();
-}
-
-void RTScheduler_recv_inflight_message() {
-  rt::Scheduler::recv_inflight_message();
-}
-
-bool RTScheduler_no_inflight_messages() {
-  return rt::Scheduler::no_inflight_messages();
 }
 
 void RTScheduler_set_allow_teardown(bool allow) {

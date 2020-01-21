@@ -71,7 +71,6 @@ const RTDescriptor* RTCown_get_descriptor(RTCown* cown);
 // TODO: RTCown_get_epoch_mark?
 // TODO: RTCown_cown_zero_rc?
 // TODO: RTCown_send?
-void RTCown_reschedule(RTCown* cown);
 bool RTCown_can_lifo_schedule(RTCown* cown);
 void RTCown_wake(RTCown* cown);
 void RTCown_acquire(RTCown* cown);
@@ -98,9 +97,6 @@ void RTAction_schedule(RTAction* action, RTCown** cowns, size_t count);
 
 void RTScheduler_set_detect_leaks(bool b);
 bool RTScheduler_get_detect_leaks();
-void RTScheduler_record_inflight_message();
-void RTScheduler_recv_inflight_message();
-bool RTScheduler_no_inflight_messages();
 void RTScheduler_set_allow_teardown(bool allow);
 void RTScheduler_set_fair(bool fair);
 bool RTScheduler_is_teardown_in_progress();
