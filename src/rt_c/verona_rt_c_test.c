@@ -65,6 +65,9 @@ void BankAccount_add_fn(BankAccount_add_Action* action) {
   printf("new balance: %lld\n", action->self->balance);
 }
 
+///
+// Example creation of a bank account and payments made into it.
+
 void startup(void* arg) {
   BankAccount* account = BankAccount_create(1000);
   // RTCown_acquire((RTCown*)account);
@@ -75,9 +78,6 @@ void startup(void* arg) {
 
   printf("startup function complete!\n");
 }
-
-///
-// Example creation of a bank account and payments made into it.
 
 int main(int argc, const char* argv[])
 {
