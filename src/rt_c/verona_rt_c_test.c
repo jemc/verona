@@ -65,6 +65,17 @@ void BankAccount_add_fn(BankAccount_add_Action* action) {
   printf("new balance: %lld\n", action->self->balance);
 }
 
+void startup(void* arg) {
+  BankAccount* account = BankAccount_create(1000);
+  // RTCown_acquire((RTCown*)account);
+  BankAccount_add(account, 200);
+  BankAccount_add(account, 500);
+  BankAccount_add(account, 1500);
+  RTCown_release((RTCown*)account);
+
+  printf("startup function complete!\n");
+}
+
 ///
 // Example creation of a bank account and payments made into it.
 
@@ -75,14 +86,6 @@ int main(int argc, const char* argv[])
   RTScheduler_set_detect_leaks(true);
   printf("RTScheduler setup complete!\n");
 
-  BankAccount* account = BankAccount_create(1000);
-  // RTCown_acquire((RTCown*)account);
-  BankAccount_add(account, 200);
-  BankAccount_add(account, 500);
-  BankAccount_add(account, 1500);
-  RTCown_release((RTCown*)account);
-
-  printf("RTScheduler running...\n");
-  RTScheduler_run();
+  RTScheduler_run_with_startup(startup, NULL);
   printf("RTScheduler finished!\n");
 }

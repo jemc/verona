@@ -154,3 +154,7 @@ void RTScheduler_init(size_t cores) {
 void RTScheduler_run() {
   rt::Scheduler::get().run();
 }
+
+void RTScheduler_run_with_startup(RTSchedulerStartupFunction f, void* arg) {
+  rt::Scheduler::get().run_with_startup(f, arg);
+}

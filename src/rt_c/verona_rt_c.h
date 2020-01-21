@@ -45,6 +45,8 @@ struct RTActionDescriptor {
 };
 typedef struct RTActionDescriptor RTActionDescriptor;
 
+typedef void (*RTSchedulerStartupFunction)(void* arg);
+
 ///
 // RTObjectStack
 
@@ -111,6 +113,6 @@ bool RTScheduler_is_teardown_in_progress();
 void RTScheduler_want_ld();
 void RTScheduler_init(size_t cores);
 void RTScheduler_run();
-// TODO: RTScheduler_run_with_startup?
+void RTScheduler_run_with_startup(RTSchedulerStartupFunction f, void* arg);
 
 #endif
