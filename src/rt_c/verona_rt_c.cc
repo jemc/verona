@@ -43,11 +43,13 @@ const RTDescriptor* RTObject_get_descriptor(RTObject* obj) {
 // RTCown
 
 RTCown* RTCown_alloc(RTDescriptor* desc) {
-  return reinterpret_cast<RTCown*>(rt::Cown::alloc(
+  rt::Cown* cown = rt::Cown::alloc(
     rt::ThreadAlloc::get(),
     reinterpret_cast<rt::Descriptor*>(desc),
     rt::Scheduler::alloc_epoch()
-  ));
+  );
+  new (cown) rt::Cown;
+  return reinterpret_cast<RTCown*>(cown);
 }
 
 const RTDescriptor* RTCown_get_descriptor(RTCown* cown) {
