@@ -50,6 +50,8 @@ if(USE_ASAN)
 endif()
 
 if(USE_EXECINFO)
+  target_compile_definitions(verona_rt INTERFACE -DUSE_EXECINFO)
+
   if (${CMAKE_BUILD_TYPE} MATCHES "Debug|RelWithDebInfo")
     target_link_libraries(verona_rt INTERFACE -rdynamic)
   endif()
@@ -58,6 +60,14 @@ if(USE_EXECINFO)
   if(EXISTS ${LIBEXECINFO})
     target_link_libraries(verona_rt INTERFACE execinfo)
   endif()
+endif()
+
+if(USE_SYSTEMATIC_TESTING)
+  target_compile_definitions(verona_rt INTERFACE -DUSE_SYSTEMATIC_TESTING)
+endif()
+
+if(USE_FLIGHT_RECORDER)
+  target_compile_definitions(verona_rt INTERFACE -DUSE_FLIGHT_RECORDER)
 endif()
 
 if(VERONA_CI_BUILD)
