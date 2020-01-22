@@ -60,7 +60,7 @@ void BankAccount_add(BankAccount* self, uint64_t amount) {
   RTAction_schedule((RTAction*)action, (RTCown**)&self, 1);
 }
 void BankAccount_add_fn(BankAccount_add_Action* action) {
-  // All the above is just boilerplate; this is where the action is implemented.
+  RTSystematic_log_ptr("BankAccount_add_fn start", (void*)action);
   action->self->balance = action->self->balance + action->amount;
   printf("new balance: %lld\n", action->self->balance);
 }
@@ -76,7 +76,7 @@ void startup(void* arg) {
   BankAccount_add(account, 1500);
   RTCown_release((RTCown*)account);
 
-  printf("startup function complete!\n");
+  RTSystematic_log("startup function complete");
 }
 
 int main(int argc, const char* argv[])
@@ -85,8 +85,8 @@ int main(int argc, const char* argv[])
   RTScheduler_init(1);
   RTScheduler_want_ld();
   RTScheduler_set_detect_leaks(true);
-  printf("RTScheduler setup complete!\n");
+  RTSystematic_log("RTScheduler setup complete");
 
   RTScheduler_run_with_startup(startup, NULL);
-  printf("RTScheduler finished!\n");
+  RTSystematic_log("RTScheduler finished running");
 }

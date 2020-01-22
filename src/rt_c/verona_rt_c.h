@@ -115,5 +115,7 @@ void RTScheduler_run_with_startup(RTSchedulerStartupFunction f, void* arg);
 // RTSystematic
 
 void RTSystematic_enable_crash_logging();
+void RTSystematic_log(char* message);
+void RTSystematic_log_ptr(char* message, void* ptr);
 
 #endif

@@ -151,3 +151,11 @@ void RTScheduler_run_with_startup(RTSchedulerStartupFunction f, void* arg) {
 void RTSystematic_enable_crash_logging() {
   rt:Systematic::enable_crash_logging();
 }
+
+void RTSystematic_log(char* message) {
+  rt:Systematic::cout() << message << std::endl;
+}
+
+void RTSystematic_log_ptr(char* message, void* ptr) {
+  rt:Systematic::cout() << message << ": " << ptr << std::endl;
+}
