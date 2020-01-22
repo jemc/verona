@@ -93,9 +93,9 @@ bool RTCown_acquire_strong_from_weak(RTCown* cown) {
 // RTAction
 
 RTAction* RTAction_new(RTActionDescriptor* desc) {
-  return reinterpret_cast<RTAction*>(
-    new rt::Action(reinterpret_cast<rt::Action::Descriptor*>(desc))
-  );
+  rt::Action* action = (rt::Action*)rt::ThreadAlloc::get()->alloc(desc->size);
+  new (action) rt::Action(reinterpret_cast<rt::Action::Descriptor*>(desc));
+  return reinterpret_cast<RTAction*>(action);
 }
 
 void RTAction_schedule(RTAction* action, RTCown** cowns, size_t count) {
