@@ -144,3 +144,10 @@ void RTScheduler_run() {
 void RTScheduler_run_with_startup(RTSchedulerStartupFunction f, void* arg) {
   rt::Scheduler::get().run_with_startup(f, arg);
 }
+
+///
+// RTSystematic
+
+void RTSystematic_enable_crash_logging() {
+  rt:Systematic::enable_crash_logging();
+}

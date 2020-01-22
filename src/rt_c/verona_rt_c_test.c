@@ -81,6 +81,7 @@ void startup(void* arg) {
 
 int main(int argc, const char* argv[])
 {
+  RTSystematic_enable_crash_logging();
   RTScheduler_init(1);
   RTScheduler_want_ld();
   RTScheduler_set_detect_leaks(true);
