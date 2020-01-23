@@ -29,16 +29,15 @@ struct RTCown {
 typedef struct RTCown RTCown;
 
 typedef void (*RTDescriptorTraceFunction)(RTObject* o, RTObjectStack* st);
-typedef void (*RTDescriptorTraceIsoFunction)(RTObject* o, RTObjectStack* st);
-typedef void (*RTDescriptorTraceFinalFunction)(RTObject* o);
-typedef void (*RTDescriptorTraceNotifiedFunction)(RTObject* o);
+typedef void (*RTDescriptorFinalFunction)(RTObject* o);
+typedef void (*RTDescriptorNotifyFunction)(RTObject* o);
 
 struct RTDescriptor {
   size_t size;
   RTDescriptorTraceFunction trace;
-  RTDescriptorTraceIsoFunction trace_possibly_iso;
-  RTDescriptorTraceFinalFunction finaliser;
-  RTDescriptorTraceNotifiedFunction notified;
+  RTDescriptorTraceFunction trace_possibly_iso;
+  RTDescriptorFinalFunction finaliser;
+  RTDescriptorNotifyFunction notified;
 };
 typedef struct RTDescriptor RTDescriptor;
 
