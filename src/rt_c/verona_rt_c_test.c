@@ -68,7 +68,7 @@ void BankAccount_add_fn(BankAccount_add_Action* action) {
 ///
 // Example creation of a bank account and payments made into it.
 
-void startup(void* arg) {
+void example(void* arg) {
   BankAccount* account = BankAccount_create(1000);
   // RTCown_acquire((RTCown*)account);
   BankAccount_add(account, 200);
@@ -76,17 +76,10 @@ void startup(void* arg) {
   BankAccount_add(account, 1500);
   RTCown_release((RTCown*)account);
 
-  RTSystematic_log("startup function complete");
+  RTSystematic_log("example function complete");
 }
 
-int main(int argc, const char* argv[])
+int main(int argc, char** argv)
 {
-  RTSystematic_enable_crash_logging();
-  RTScheduler_init(1);
-  RTScheduler_want_ld();
-  RTScheduler_set_detect_leaks(true);
-  RTSystematic_log("RTScheduler setup complete");
-
-  RTScheduler_run_with_startup(startup, NULL);
-  RTSystematic_log("RTScheduler finished running");
+  RTSystematicTestHarness_run(argc, argv, example, NULL);
 }

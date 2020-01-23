@@ -1,4 +1,5 @@
 #include <verona.h>
+#include "test/harness.h"
 using namespace verona;
 
 extern "C" {
@@ -141,7 +142,7 @@ void RTScheduler_run() {
   rt::Scheduler::get().run();
 }
 
-void RTScheduler_run_with_startup(RTSchedulerStartupFunction f, void* arg) {
+void RTScheduler_run_with_startup(RTCallbackFunction f, void* arg) {
   rt::Scheduler::get().run_with_startup(f, arg);
 }
 
@@ -158,4 +159,9 @@ void RTSystematic_log(char* message) {
 
 void RTSystematic_log_ptr(char* message, void* ptr) {
   rt:Systematic::cout() << message << ": " << ptr << std::endl;
+}
+
+void RTSystematicTestHarness_run(int argc, char** argv, RTCallbackFunction f, void* arg) {
+  SystematicTestHarness harness(argc, argv);
+  harness.run(f, arg);
 }

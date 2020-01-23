@@ -45,7 +45,7 @@ struct RTActionDescriptor {
 };
 typedef struct RTActionDescriptor RTActionDescriptor;
 
-typedef void (*RTSchedulerStartupFunction)(void* arg);
+typedef void (*RTCallbackFunction)(void* arg);
 
 ///
 // RTObjectStack
@@ -109,7 +109,7 @@ bool RTScheduler_is_teardown_in_progress();
 void RTScheduler_want_ld();
 void RTScheduler_init(size_t cores);
 void RTScheduler_run();
-void RTScheduler_run_with_startup(RTSchedulerStartupFunction f, void* arg);
+void RTScheduler_run_with_startup(RTCallbackFunction f, void* arg);
 
 ///
 // RTSystematic
@@ -117,5 +117,6 @@ void RTScheduler_run_with_startup(RTSchedulerStartupFunction f, void* arg);
 void RTSystematic_enable_crash_logging();
 void RTSystematic_log(char* message);
 void RTSystematic_log_ptr(char* message, void* ptr);
+void RTSystematicTestHarness_run(int argc, char** argv, RTCallbackFunction f, void* arg);
 
 #endif
