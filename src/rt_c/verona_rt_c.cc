@@ -44,6 +44,9 @@ const RTDescriptor* RTObject_get_descriptor(RTObject* obj) {
 // RTCown
 
 RTCown* RTCown_alloc(RTDescriptor* desc) {
+  static_assert(sizeof(RTCown) == sizeof(rt::Cown),
+    "Expected the opaque RTCown to be the same size as the actual rt::Cown");
+
   rt::Cown* cown = rt::Cown::alloc(
     rt::ThreadAlloc::get(),
     reinterpret_cast<rt::Descriptor*>(desc),

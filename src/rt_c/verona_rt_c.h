@@ -15,7 +15,17 @@ typedef struct RTObjectStack RTObjectStack;
 struct RTObject;
 typedef struct RTObject RTObject;
 
-struct RTCown;
+struct RTCown {
+  // This struct has an opaque size because it is meant to be used as padding
+  // by C structs that need to act as "subclasses" of the C++ class Cown.
+  // The size of a Cown varies - it has extra fields when the runtime
+  // was compiled with systematic testing features enabled.
+#ifdef USE_SYSTEMATIC_TESTING
+  void* _opaque[12];
+#else
+  void* _opaque[8];
+#endif
+};
 typedef struct RTCown RTCown;
 
 typedef void (*RTDescriptorTraceFunction)(RTObject* o, RTObjectStack* st);

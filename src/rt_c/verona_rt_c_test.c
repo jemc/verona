@@ -7,7 +7,11 @@
 // C API example - implements the same semantics as the bank1.verona example.
 
 struct BankAccount {
-  void* _rt_cown_overhead[8];
+  // Every struct we intend to use as a Cown needs to be front-padded
+  // with the size of a Cown, leaving room for the Cown's fields.
+  RTCown cown;
+
+  // Now we have the actual fields of the struct we will use in business logic.
   uint64_t balance;
 };
 typedef struct BankAccount BankAccount;
