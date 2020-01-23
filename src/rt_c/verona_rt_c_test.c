@@ -74,7 +74,6 @@ void BankAccount_add_fn(BankAccount_add_Action* action) {
 
 void example(void* arg) {
   BankAccount* account = BankAccount_create(1000);
-  // RTCown_acquire((RTCown*)account);
   BankAccount_add(account, 200);
   BankAccount_add(account, 500);
   BankAccount_add(account, 1500);
