@@ -57,6 +57,11 @@ typedef struct RTActionDescriptor RTActionDescriptor;
 typedef void (*RTCallbackFunction)(void* arg);
 
 ///
+// RTAlloc
+
+RTAlloc* RTAlloc_get();
+
+///
 // RTObjectStack
 
 bool RTObjectStack_empty(RTObjectStack* stack);
@@ -75,7 +80,7 @@ const RTDescriptor* RTObject_get_descriptor(RTObject* obj);
 ///
 // RTCown
 
-RTCown* RTCown_alloc(RTDescriptor* desc);
+RTCown* RTCown_new(RTAlloc* alloc, RTDescriptor* desc);
 const RTDescriptor* RTCown_get_descriptor(RTCown* cown);
 // TODO: RTCown_get_epoch_mark?
 // TODO: RTCown_cown_zero_rc?
@@ -83,8 +88,8 @@ const RTDescriptor* RTCown_get_descriptor(RTCown* cown);
 bool RTCown_can_lifo_schedule(RTCown* cown);
 void RTCown_wake(RTCown* cown);
 void RTCown_acquire(RTCown* cown);
-void RTCown_release(RTCown* cown);
-void RTCown_weak_release(RTCown* cown);
+void RTCown_release(RTCown* cown, RTAlloc* alloc);
+void RTCown_weak_release(RTCown* cown, RTAlloc* alloc);
 void RTCown_weak_acquire(RTCown* cown);
 bool RTCown_acquire_strong_from_weak(RTCown* cown);
 // TODO: RTCown_mark_for_scan?
@@ -98,7 +103,7 @@ bool RTCown_acquire_strong_from_weak(RTCown* cown);
 ///
 // RTAction
 
-RTAction* RTAction_new(RTActionDescriptor* desc);
+RTAction* RTAction_new(RTAlloc* alloc, RTActionDescriptor* desc);
 void RTAction_schedule(RTAction* action, RTCown** cowns, size_t count);
 
 ///

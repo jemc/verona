@@ -7,6 +7,13 @@ extern "C" {
 }
 
 ///
+// RTAlloc
+
+RTAlloc* RTAlloc_get() {
+  return reinterpret_cast<RTAlloc*>(rt::ThreadAlloc::get());
+}
+
+///
 // RTObjectStack
 
 bool RTObjectStack_empty(RTObjectStack* stack) {
@@ -43,12 +50,12 @@ const RTDescriptor* RTObject_get_descriptor(RTObject* obj) {
 ///
 // RTCown
 
-RTCown* RTCown_alloc(RTDescriptor* desc) {
+RTCown* RTCown_new(RTAlloc* alloc, RTDescriptor* desc) {
   static_assert(sizeof(RTCown) == sizeof(rt::Cown),
     "Expected the opaque RTCown to be the same size as the actual rt::Cown");
 
   rt::Cown* cown = rt::Cown::alloc(
-    rt::ThreadAlloc::get(),
+    reinterpret_cast<rt::Alloc*>(alloc),
     reinterpret_cast<rt::Descriptor*>(desc),
     rt::Scheduler::alloc_epoch()
   );
@@ -74,15 +81,17 @@ void RTCown_acquire(RTCown* cown) {
   rt::Cown::acquire(reinterpret_cast<rt::Cown*>(cown));
 }
 
-void RTCown_release(RTCown* cown) {
+void RTCown_release(RTCown* cown, RTAlloc* alloc) {
   rt::Cown::release(
-    rt::ThreadAlloc::get(),
+    reinterpret_cast<rt::Alloc*>(alloc),
     reinterpret_cast<rt::Cown*>(cown)
   );
 }
 
-void RTCown_weak_release(RTCown* cown) {
-  reinterpret_cast<rt::Cown*>(cown)->weak_release(rt::ThreadAlloc::get());
+void RTCown_weak_release(RTCown* cown, RTAlloc* alloc) {
+  reinterpret_cast<rt::Cown*>(cown)->weak_release(
+    reinterpret_cast<rt::Alloc*>(alloc)
+  );
 }
 
 void RTCown_weak_acquire(RTCown* cown) {
@@ -96,8 +105,10 @@ bool RTCown_acquire_strong_from_weak(RTCown* cown) {
 ///
 // RTAction
 
-RTAction* RTAction_new(RTActionDescriptor* desc) {
-  rt::Action* action = (rt::Action*)rt::ThreadAlloc::get()->alloc(desc->size);
+RTAction* RTAction_new(RTAlloc* alloc, RTActionDescriptor* desc) {
+  rt::Action* action = reinterpret_cast<rt::Action*>(
+    (reinterpret_cast<rt::Alloc*>(alloc))->alloc(desc->size)
+  );
   new (action) rt::Action(reinterpret_cast<rt::Action::Descriptor*>(desc));
   return reinterpret_cast<RTAction*>(action);
 }

@@ -29,7 +29,7 @@ RTDescriptor BankAccount_Desc = {
 
 BankAccount* BankAccount_create(uint64_t opening_balance) {
   BankAccount* self =
-    (BankAccount*)RTCown_alloc(&BankAccount_Desc);
+    (BankAccount*)RTCown_new(RTAlloc_get(), &BankAccount_Desc);
 
   self->balance = opening_balance;
 
@@ -56,8 +56,9 @@ RTActionDescriptor BankAccount_add_ActionDesc = {
   (RTActionTraceFunction)BankAccount_add_ActionTrace
 };
 void BankAccount_add(BankAccount* self, uint64_t amount) {
-  BankAccount_add_Action* action =
-    (BankAccount_add_Action*)RTAction_new(&BankAccount_add_ActionDesc);
+  BankAccount_add_Action* action = (BankAccount_add_Action*)(
+    RTAction_new(RTAlloc_get(), &BankAccount_add_ActionDesc)
+  );
   action->self = self;
   action->amount = amount;
 
@@ -77,7 +78,7 @@ void example(void* arg) {
   BankAccount_add(account, 200);
   BankAccount_add(account, 500);
   BankAccount_add(account, 1500);
-  RTCown_release((RTCown*)account);
+  RTCown_release((RTCown*)account, RTAlloc_get());
 
   RTSystematic_log("example function complete");
 }
