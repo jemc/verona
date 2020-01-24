@@ -4,27 +4,27 @@ set(CMAKE_C_COMPILE_OBJECT
 # Shared library
 add_library(verona_rt_c SHARED verona_rt_c.cc)
 target_link_libraries(verona_rt_c verona_rt)
-install(TARGETS verona_rt_c RUNTIME DESTINATION .)
+install(TARGETS verona_rt_c LIBRARY DESTINATION lib)
 set_target_properties(verona_rt_c PROPERTIES OUTPUT_NAME verona)
 
 # Shared library w/ systematic testing
 add_library(verona_rt_c_sys SHARED verona_rt_c.cc)
 target_compile_definitions(verona_rt_c_sys PRIVATE USE_SYSTEMATIC_TESTING)
 target_link_libraries(verona_rt_c_sys verona_rt)
-install(TARGETS verona_rt_c_sys RUNTIME DESTINATION .)
+install(TARGETS verona_rt_c_sys LIBRARY DESTINATION lib)
 set_target_properties(verona_rt_c_sys PROPERTIES OUTPUT_NAME verona-sys)
 
 # Static library
 add_library(verona_rt_c_static verona_rt_c.cc)
 target_link_libraries(verona_rt_c_static verona_rt)
-install(TARGETS verona_rt_c_static RUNTIME DESTINATION .)
+install(TARGETS verona_rt_c_static ARCHIVE DESTINATION lib)
 set_target_properties(verona_rt_c_static PROPERTIES OUTPUT_NAME verona-static)
 
 # Static library w/ systematic testing
 add_library(verona_rt_c_static_sys verona_rt_c.cc)
 target_compile_definitions(verona_rt_c_static_sys PRIVATE USE_SYSTEMATIC_TESTING)
 target_link_libraries(verona_rt_c_static_sys verona_rt)
-install(TARGETS verona_rt_c_static_sys RUNTIME DESTINATION .)
+install(TARGETS verona_rt_c_static_sys ARCHIVE DESTINATION lib)
 set_target_properties(verona_rt_c_static_sys PROPERTIES OUTPUT_NAME verona-sys-static)
 
 # Example program
