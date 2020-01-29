@@ -45,16 +45,57 @@ void RTObjectStack_push(RTObjectStack* stack, RTObject* obj) {
 ///
 // RTObject
 
+RTObject* RTObject_new_iso(RTAlloc* alloc, RTDescriptor* desc) {
+  rt::Object* obj = rt::RegionTrace::create(
+    reinterpret_cast<rt::Alloc*>(alloc),
+    reinterpret_cast<rt::Descriptor*>(desc)
+  );
+  new (obj) rt::Object;
+  return reinterpret_cast<RTObject*>(obj);
+}
+
+RTObject* RTObject_new_mut(RTAlloc* alloc, RTDescriptor* desc, RTObject* iso_root) {
+  rt::Object* obj = rt::RegionTrace::alloc(
+    reinterpret_cast<rt::Alloc*>(alloc),
+    reinterpret_cast<rt::Object*>(iso_root),
+    reinterpret_cast<rt::Descriptor*>(desc)
+  );
+  new (obj) rt::Object;
+  return reinterpret_cast<RTObject*>(obj);
+}
+
 const RTDescriptor* RTObject_get_descriptor(RTObject* obj) {
   return reinterpret_cast<const RTDescriptor*>(
     reinterpret_cast<rt::Object*>(obj)->get_descriptor()
   );
 }
 
-void RTObject_freeze(RTObject* obj, RTAlloc* alloc) {
+void RTObject_region_destroy(RTAlloc* alloc, RTObject* iso_root) {
+  rt::Region::release(
+    reinterpret_cast<rt::Alloc*>(alloc),
+    reinterpret_cast<rt::Object*>(iso_root)
+  );
+}
+
+void RTObject_region_merge(RTAlloc* alloc, RTObject* into, RTObject* other) {
+  rt::RegionTrace::merge(
+    reinterpret_cast<rt::Alloc*>(alloc),
+    reinterpret_cast<rt::Object*>(into),
+    reinterpret_cast<rt::Object*>(other)
+  );
+}
+
+void RTObject_region_swap_root(RTObject* iso_root, RTObject* new_iso_root) {
+  rt::RegionTrace::swap_root(
+    reinterpret_cast<rt::Object*>(iso_root),
+    reinterpret_cast<rt::Object*>(new_iso_root)
+  );
+}
+
+void RTObject_region_freeze(RTObject* iso_root, RTAlloc* alloc) {
   rt::Freeze::apply(
     reinterpret_cast<rt::Alloc*>(alloc),
-    reinterpret_cast<rt::Object*>(obj)
+    reinterpret_cast<rt::Object*>(iso_root)
   );
 }
 

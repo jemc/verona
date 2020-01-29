@@ -74,8 +74,13 @@ void RTObjectStack_push(RTObjectStack* stack, RTObject* obj);
 ///
 // RTObject
 
+RTObject* RTObject_new_iso(RTAlloc* alloc, RTDescriptor* desc);
+RTObject* RTObject_new_mut(RTAlloc* alloc, RTDescriptor* desc, RTObject* iso_root);
 const RTDescriptor* RTObject_get_descriptor(RTObject* obj);
-void RTObject_freeze(RTObject* obj, RTAlloc* alloc);
+void RTObject_region_destroy(RTAlloc* alloc, RTObject* iso_root);
+void RTObject_region_merge(RTAlloc* alloc, RTObject* into, RTObject* other);
+void RTObject_region_swap_root(RTObject* iso_root, RTObject* new_iso_root);
+void RTObject_region_freeze(RTObject* iso_root, RTAlloc* alloc);
 
 ///
 // RTImmutable
