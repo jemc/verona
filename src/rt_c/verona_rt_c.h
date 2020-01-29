@@ -79,6 +79,12 @@ const RTDescriptor* RTObject_get_descriptor(RTObject* obj);
 // TODO: RTObject_cown_zero_rc?
 
 ///
+// RTImmutable
+
+void RTImmutable_acquire(RTObject* obj);
+void RTImmutable_release(RTObject* obj, RTAlloc* alloc);
+
+///
 // RTCown
 
 RTCown* RTCown_new(RTAlloc* alloc, RTDescriptor* desc);

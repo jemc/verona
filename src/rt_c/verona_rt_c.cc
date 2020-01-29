@@ -52,6 +52,20 @@ const RTDescriptor* RTObject_get_descriptor(RTObject* obj) {
 }
 
 ///
+// RTImmutable
+
+void RTImmutable_acquire(RTObject* obj) {
+  rt::Immutable::acquire(reinterpret_cast<rt::Object*>(obj));
+}
+
+void RTImmutable_release(RTObject* obj, RTAlloc* alloc) {
+  rt::Immutable::release(
+    reinterpret_cast<rt::Alloc*>(alloc),
+    reinterpret_cast<rt::Object*>(obj)
+  );
+}
+
+///
 // RTCown
 
 RTCown* RTCown_new(RTAlloc* alloc, RTDescriptor* desc) {
