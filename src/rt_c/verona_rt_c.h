@@ -21,9 +21,9 @@ struct RTCown {
   // The size of a Cown varies - it has extra fields when the runtime
   // was compiled with systematic testing features enabled.
 #ifdef USE_SYSTEMATIC_TESTING
-  void* _opaque[12];
+  void* _opaque[12]; // TODO: cross-platform
 #else
-  void* _opaque[8];
+  void* _opaque[8]; // TODO: cross-platform
 #endif
 };
 typedef struct RTCown RTCown;
