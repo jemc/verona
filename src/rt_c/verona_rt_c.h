@@ -75,8 +75,7 @@ void RTObjectStack_push(RTObjectStack* stack, RTObject* obj);
 // RTObject
 
 const RTDescriptor* RTObject_get_descriptor(RTObject* obj);
-// TODO: RTObject_get_epoch_mark?
-// TODO: RTObject_cown_zero_rc?
+void RTObject_freeze(RTObject* obj, RTAlloc* alloc);
 
 ///
 // RTImmutable

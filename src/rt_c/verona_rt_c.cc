@@ -51,6 +51,13 @@ const RTDescriptor* RTObject_get_descriptor(RTObject* obj) {
   );
 }
 
+void RTObject_freeze(RTObject* obj, RTAlloc* alloc) {
+  rt::Freeze::apply(
+    reinterpret_cast<rt::Alloc*>(alloc),
+    reinterpret_cast<rt::Object*>(obj)
+  );
+}
+
 ///
 // RTImmutable
 
