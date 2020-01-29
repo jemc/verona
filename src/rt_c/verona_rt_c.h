@@ -60,6 +60,7 @@ typedef void (*RTCallbackFunction)(void* arg);
 // RTAlloc
 
 RTAlloc* RTAlloc_get();
+void* RTAlloc_alloc(RTAlloc* alloc, size_t size);
 
 ///
 // RTObjectStack

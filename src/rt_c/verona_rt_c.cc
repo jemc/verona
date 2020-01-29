@@ -13,6 +13,10 @@ RTAlloc* RTAlloc_get() {
   return reinterpret_cast<RTAlloc*>(rt::ThreadAlloc::get());
 }
 
+void* RTAlloc_alloc(RTAlloc* alloc, size_t size) {
+  return reinterpret_cast<rt::Alloc*>(alloc)->alloc(size);
+}
+
 ///
 // RTObjectStack
 
