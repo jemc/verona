@@ -12,7 +12,11 @@ typedef struct RTAlloc RTAlloc;
 struct RTObjectStack;
 typedef struct RTObjectStack RTObjectStack;
 
-struct RTObject;
+struct RTObject {
+  // This struct has an opaque size because it is meant to be used as padding
+  // by C structs that need to act as "subclasses" of the C++ class Object.
+  void* _opaque[3]; // TODO: cross-platform
+};
 typedef struct RTObject RTObject;
 
 struct RTCown {

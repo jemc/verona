@@ -6,6 +6,12 @@ extern "C" {
   #include "verona_rt_c.h"
 }
 
+static_assert(sizeof(RTCown) == sizeof(rt::Cown),
+  "Expected the opaque RTCown to be the same size as the actual rt::Cown");
+
+static_assert(sizeof(RTObject) == sizeof(rt::Object),
+  "Expected the opaque RTObject to be the same size as the actual rt::Object");
+
 ///
 // RTAlloc
 
@@ -117,9 +123,6 @@ void RTImmutable_release(RTObject* obj, RTAlloc* alloc) {
 // RTCown
 
 RTCown* RTCown_new(RTAlloc* alloc, RTDescriptor* desc) {
-  static_assert(sizeof(RTCown) == sizeof(rt::Cown),
-    "Expected the opaque RTCown to be the same size as the actual rt::Cown");
-
   rt::Cown* cown = rt::Cown::alloc(
     reinterpret_cast<rt::Alloc*>(alloc),
     reinterpret_cast<rt::Descriptor*>(desc),
