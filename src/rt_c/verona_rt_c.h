@@ -15,7 +15,13 @@ typedef struct RTObjectStack RTObjectStack;
 struct RTObject {
   // This struct has an opaque size because it is meant to be used as padding
   // by C structs that need to act as "subclasses" of the C++ class Object.
+  // The size of an Object varies - it has extra fields when the runtime
+  // was compiled with systematic testing features enabled.
+#ifdef USE_SYSTEMATIC_TESTING
   void* _opaque[3]; // TODO: cross-platform
+#else
+  void* _opaque[2]; // TODO: cross-platform
+#endif
 };
 typedef struct RTObject RTObject;
 
