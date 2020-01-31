@@ -84,7 +84,7 @@ const RTDescriptor* RTObject_get_descriptor(RTObject* obj);
 void RTObject_region_destroy(RTAlloc* alloc, RTObject* iso_root);
 void RTObject_region_merge(RTAlloc* alloc, RTObject* into, RTObject* other);
 void RTObject_region_swap_root(RTObject* iso_root, RTObject* new_iso_root);
-void RTObject_region_freeze(RTObject* iso_root, RTAlloc* alloc);
+void RTObject_region_freeze(RTAlloc* alloc, RTObject* iso_root);
 
 ///
 // RTImmutable

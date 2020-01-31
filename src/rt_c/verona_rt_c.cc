@@ -98,7 +98,7 @@ void RTObject_region_swap_root(RTObject* iso_root, RTObject* new_iso_root) {
   );
 }
 
-void RTObject_region_freeze(RTObject* iso_root, RTAlloc* alloc) {
+void RTObject_region_freeze(RTAlloc* alloc, RTObject* iso_root) {
   rt::Freeze::apply(
     reinterpret_cast<rt::Alloc*>(alloc),
     reinterpret_cast<rt::Object*>(iso_root)
